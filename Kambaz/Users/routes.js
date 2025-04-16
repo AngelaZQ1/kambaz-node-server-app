@@ -80,7 +80,7 @@ export default function UserRoutes(app) {
             res.sendStatus(401);
             return;
         }
-        if (currentUser.role === "ADMIN") {
+        if (currentUser.role !== "STUDENT") {
             const courses = await courseDao.findAllCourses();
             res.json(courses);
             return;
@@ -113,7 +113,6 @@ export default function UserRoutes(app) {
     app.post("/api/users/:uid/courses/:cid", enrollUserInCourse);
     app.delete("/api/users/:uid/courses/:cid", unenrollUserFromCourse);
     app.get("/api/users/:uid/courses", findCoursesForUser);
-    app.get("/api/users/:userId/courses", findCoursesForEnrolledUser);
     app.post("/api/users", createUser);
     app.get("/api/users", findAllUsers);
     app.get("/api/users/:userId", findUserById);
