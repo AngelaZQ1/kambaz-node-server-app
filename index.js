@@ -7,6 +7,9 @@ import AssignmentRoutes from './Kambaz/Assignments/routes.js';
 import CourseRoutes from './Kambaz/Courses/routes.js';
 import EnrollmentRoutes from './Kambaz/Enrollments/routes.js';
 import ModuleRoutes from "./Kambaz/Modules/routes.js";
+import QuestionRoutes from './Kambaz/Questions/routes.js';
+import QuizAttemptRoutes from './Kambaz/QuizAttempts/routes.js';
+import QuizzesRoutes from './Kambaz/Quizzes/routes.js';
 import UserRoutes from './Kambaz/Users/routes.js';
 import Lab5 from './Lab5/index.js';
 
@@ -42,5 +45,8 @@ CourseRoutes(app)
 ModuleRoutes(app);
 AssignmentRoutes(app);
 EnrollmentRoutes(app);
+QuizzesRoutes(app);
+QuestionRoutes(app);
+QuizAttemptRoutes(app);
 
 app.listen(process.env.PORT || 4000)
