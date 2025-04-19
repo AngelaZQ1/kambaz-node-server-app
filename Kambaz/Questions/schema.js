@@ -4,20 +4,23 @@ const questionSchema = new mongoose.Schema(
     {
         _id: String,
         quiz: { type: String, ref: "QuizModel", required: true },
-        title: { type: String, required: false },
+        title: { type: String, default: "New Question" },
         points: { type: Number, default: 1 },
-        question: { type: String, required: true },
+        question: { type: String, default: "Question text" },
         type: {
             type: String,
             enum: ["MULTIPLE_CHOICE", "TRUE_FALSE", "FILL_IN_THE_BLANK"],
-            required: true,
+            default: "MULTIPLE_CHOICE",
         },
-        choices: [
-            {
-                text: String,
-                isCorrect: Boolean, // only one choice can be correct
-            },
-        ],
+        choices: {
+            type: [
+                {
+                    text: { type: String, default: "Choice 1" },
+                    isCorrect: { type: Boolean, default: true },
+                },
+            ],
+            default: () => [{ text: "Choice 1", isCorrect: true }],
+        },
     },
     { collection: "questions" }
 );

@@ -44,12 +44,12 @@ export const addQuestionToQuiz = async (quizId, questionData) => {
     );
     return newQuestion;
 };
-export const deleteQuestionFromQuiz = async (quizId, questionId) => {
-    await QuestionModel.deleteOne({ _id: questionId });
+export const deleteQuestionFromQuiz = async (quizId, question) => {
+    await QuestionModel.deleteOne({ _id: question });
     await model.updateOne(
         { _id: quizId },
         {
-            $pull: { questions: questionId },
+            $pull: { questions: question._id },
             $inc: { points: -(question.points || 0) },
         }
     );

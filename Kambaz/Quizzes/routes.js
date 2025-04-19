@@ -28,9 +28,8 @@ export default function QuizRoutes(app) {
     const addQuestionToQuiz = async (req, res) => {
         const { qid } = req.params;
         const questionData = req.body;
-        await dao.addQuestionToQuiz(qid, questionData);
-        const updatedQuiz = await dao.findQuizById(qid);
-        res.json(updatedQuiz);
+        const newQuestion = await dao.addQuestionToQuiz(qid, questionData);
+        res.json(newQuestion);
     }
     const deleteQuestionFromQuiz = async (req, res) => {
         const { qid, questionId } = req.params;
