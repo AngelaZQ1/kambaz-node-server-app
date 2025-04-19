@@ -38,8 +38,7 @@ export const addQuestionToQuiz = async (quizId, questionData) => {
     await model.updateOne(
         { _id: quizId },
         {
-            $push: { questions: newQuestion._id },
-            $inc: { points: newQuestion.points || 0 },
+            $push: { questions: newQuestion._id }
         }
     );
     return newQuestion;
@@ -50,8 +49,11 @@ export const deleteQuestionFromQuiz = async (quizId, question) => {
         { _id: quizId },
         {
             $pull: { questions: question._id },
-            $inc: { points: -(question.points || 0) },
+            $dec: { points: (question.points || 0) },
         }
     );
 }
-export const deleteQuiz = (quizId) => model.deleteOne({ _id: quizId });
+export const deleteQuiz = async (quizId) => {
+    await QuestionModel.deleteMany({ quiz: quizId });
+    await model.deleteOne({ _id: quizId })
+};

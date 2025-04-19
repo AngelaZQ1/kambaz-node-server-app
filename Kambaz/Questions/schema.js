@@ -5,7 +5,7 @@ const questionSchema = new mongoose.Schema(
         _id: String,
         quiz: { type: String, ref: "QuizModel", required: true },
         title: { type: String, default: "New Question" },
-        points: { type: Number, default: 1 },
+        points: { type: Number, default: 0 },
         question: { type: String, default: "Question text" },
         type: {
             type: String,
