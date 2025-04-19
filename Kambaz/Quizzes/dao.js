@@ -15,8 +15,21 @@ export const createQuiz = async (courseId) => {
 export const updateQuiz = async (quizId, quizUpdates) => {
     await model.updateOne({ _id: quizId }, { $set: quizUpdates });
     const quiz = await model.findById(quizId).populate("questions"); // Populate questions to access their points
+
+    // update points
     const totalPoints = quiz.questions.reduce((sum, question) => sum + (question.points || 0), 0);
-    await model.updateOne({ _id: quizId }, { $set: { points: totalPoints } });
+
+    // calculate availability
+    let availability = "Closed";
+    const currentDate = new Date();
+    if (quiz.availableDate && quiz.availableUntilDate) {
+        if (currentDate < quiz.availableDate) {
+            availability = `Not available until ${quiz.availableDate.toISOString()}`;
+        } else if (currentDate >= quiz.availableDate && currentDate <= quiz.availableUntilDate) {
+            availability = "Available";
+        }
+    }
+    await model.updateOne({ _id: quizId }, { $set: { availability, points: totalPoints } });
     return model.findById(quizId).populate("questions");
 };
 export const addQuestionToQuiz = async (quizId, questionData) => {
