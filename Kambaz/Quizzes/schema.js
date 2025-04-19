@@ -5,7 +5,7 @@ const quizSchema = new mongoose.Schema(
         _id: String,
         title: String,
         course: { type: String, ref: "CourseModel" },
-        questions: [{ type: String, ref: "QuestionModel" }],
+        questions: { type: [{ type: String, ref: "QuestionModel" }], default: [] },
         type: {
             type: String,
             enum: ["Graded Quiz", "Practice Quiz", "Graded Survey", "Ungraded Survey"],
