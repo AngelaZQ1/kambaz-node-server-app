@@ -9,13 +9,13 @@ const quizAttemptSchema = new mongoose.Schema(
         answers: [
             {
                 question: { type: String, ref: "QuestionModel", required: true },
-                selectedChoices: [String],
+                selectedChoiceId: String,
                 fillInTheBlankAnswer: String,
                 isCorrect: Boolean,
             },
         ],
     },
-    { collection: "quiz_attempts" }
+    { collection: "quiz_attempts", timestamps: true }
 );
 
 export default quizAttemptSchema;
