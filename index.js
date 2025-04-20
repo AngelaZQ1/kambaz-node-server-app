@@ -23,6 +23,8 @@ app.use(cors({
     origin: process.env.NETLIFY_URL || "http://localhost:5173",
 }))
 
+app.use(express.json())
+
 const sessionOptions = {
     secret: process.env.SESSION_SECRET || "kambaz",
     resave: false,
@@ -38,7 +40,6 @@ if (process.env.NODE_ENV !== "development") {
 }
 app.use(session(sessionOptions));
 
-app.use(express.json())
 Lab5(app)
 UserRoutes(app)
 CourseRoutes(app)
@@ -48,5 +49,11 @@ EnrollmentRoutes(app);
 QuizzesRoutes(app);
 QuestionRoutes(app);
 QuizAttemptRoutes(app);
+
+app.use((err, req, res, next) => {
+    res.header('Access-Control-Allow-Origin', process.env.NETLIFY_URL || "http://localhost:5173");
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.status(err.status || 500).json({ error: err.message });
+});
 
 app.listen(process.env.PORT || 4000)
